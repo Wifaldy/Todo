@@ -12,7 +12,7 @@ router.put('/signup', [
     .isEmail()
     .withMessage('Please enter a valid email')
     .custom(async(email, { req }) => {
-        const user = await User.findOne({ email: { email: email } })
+        const user = await User.findOne({ where: { email: email } })
         if (user) {
             throw new Error('Email already in use')
         }
@@ -26,5 +26,7 @@ router.put('/signup', [
         return true;
     })
 ], userController.putSignUp);
+
+router.post("/login", userController.postLogin);
 
 module.exports = router;
